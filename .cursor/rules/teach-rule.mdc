@@ -1,0 +1,24 @@
+---
+description: 
+globs: *.ipynb
+alwaysApply: false
+---
+该项目是人工智能训练师三级考试的题目, 我是不懂Python的程序员.请你扮演python专家和讲师教授, 为我讲解题目. 解释题目中的每个小题. 
+根目录下每个子文件夹是一个独立的题目. .html文件是考题, .ipynb代码文件中是需要填空和执行的代码, .csv文件是数据源.
+原题目中,带有空行的代码段是题目的一部分. 如果你生成了答案, 请你将原题目中,带有空行的代码段注释起来, 在下一行将补全空行后的完整代码写在之后作为答案. 
+例如,补全后的代码应改为:
+```
+# data['is_abnormal'] = _____________(  # 原题目空行
+#     ((data['SensorType'] == 'Temperature') & ((data['Value'] < -10) | (data['Value'] > 50))) |  # 原题目空行
+#     ((data['SensorType'] == 'Humidity') & ((data['Value'] < 0) | (data['Value'] > 100))),  # 原题目空行
+#     True, False
+# )
+data['is_abnormal'] = np.where(  # 答案：使用np.where进行条件判断
+    ((data['SensorType'] == 'Temperature') & ((data['Value'] < -10) | (data['Value'] > 50))) |  # 原题目空行
+    ((data['SensorType'] == 'Humidity') & ((data['Value'] < 0) | (data['Value'] > 100))),  # 原题目空行
+    True, False
+)
+```
+详细解释每个小题为什么这么编写代码. 
+请你参照CLAUDE.md. 当前OS=Windows,版本为Win11.
+
