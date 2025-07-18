@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(wget:*)"
+      "Bash(wget:*)",
+      "Bash(python:*)"
     ],
     "deny": []
   }
