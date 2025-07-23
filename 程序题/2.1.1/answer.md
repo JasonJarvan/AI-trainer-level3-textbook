@@ -62,7 +62,7 @@ data = data.dropna()  # 答案：使用data.dropna()删除包含缺失值的行
 # data['horsepower'] = __________(data['horsepower'], errors='coerce')
 # data = __________
 data['horsepower'] = pd.to_numeric(data['horsepower'], errors='coerce')  # 答案：使用pd.to_numeric()转换，errors='coerce'将无法转换的值设为NaN
-data = data.dropna()  # 答案：删除转换后产生的NaN值
+data = data.dropna(subset=['horsepower'])  # 答案：只删除horsepower列为NaN的行（更精确的方法）
 
 # 显示每一列的数据类型
 print(data.horsepower.dtypes)
@@ -126,6 +126,28 @@ data = data.dropna()
 - 从数据中可以看到`horsepower`列包含非数值字符（如'?'、'a'、'b'等）
 - `errors='coerce'` 将无法转换的值设为NaN
 - 再次使用`dropna()`删除转换后的NaN值
+
+**⚠️ 重要讨论：`data.dropna()` vs `data.dropna(subset=['horsepower'])`**
+
+**方法对比：**
+1. **`data.dropna()`** - 删除任何包含NaN值的行
+2. **`data.dropna(subset=['horsepower'])`** - 只删除horsepower列为NaN的行
+
+**老师建议 `data.dropna(subset=['horsepower'])` 的原因：**
+- **更精确**：只删除horsepower列有问题的行，保留其他列数据完整的行
+- **数据保留更多**：避免因为其他列的缺失值而删除horsepower列数据完整的行
+- **业务逻辑更合理**：我们主要关心horsepower列的数据质量
+
+**实际数据情况分析：**
+从auto-mpg.csv数据可以看出：
+- horsepower列确实存在'?'、'a'、'b'等非数值字符
+- 其他列（如weight、acceleration）也可能存在缺失值
+- 使用`subset=['horsepower']`可以更精确地处理数据
+
+**结论：老师的答案确实更好！**
+- 更符合数据清洗的最佳实践
+- 保留更多有效数据
+- 处理逻辑更精确
 
 ### 4. 数据标准化 (1分)
 ```python
@@ -212,6 +234,16 @@ cleaned_data.to_csv('2.1.1_cleaned_data.csv', index=False)
 
 ### 用户提问
 用户表示自己是不懂Python的程序员，希望AI扮演Python专家和讲师教授，为其讲解人工智能训练师三级考试题目，解释题目中的每个小题，并按照特定格式补全代码。
+
+### 重要发现与改进
+**用户提出了一个关键问题：** `data.dropna()` vs `data.dropna(subset=['horsepower'])`
+
+**AI的回答：** 老师的建议 `data.dropna(subset=['horsepower'])` 确实更好，因为：
+1. **更精确的数据处理**：只删除目标列有问题的行
+2. **保留更多有效数据**：避免因其他列缺失值而删除有用数据
+3. **符合数据清洗最佳实践**：针对性地处理特定列的问题
+
+**学习价值：** 这个讨论体现了数据科学中精确性和效率的重要性，以及如何在实际项目中做出更好的技术选择。
 
 ### AI回答要点
 1. **详细题目解析**：从题目概述、数据集分析到代码实现
